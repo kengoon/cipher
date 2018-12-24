@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Dec 24 13:01:41 2018
+
+@author: kengo
+"""
+
+import math
+def main():
+    myMessage =input('enter the encrypted message boss:>')
+    myKey = int(input('enter your key boss:'))
+    plaintext = decryptMessage(myKey, myMessage)
+# Print with a | (called "pipe" character) after it in case
+# there are spaces at the end of the decrypted message.
+    print(plaintext)
+    
+def decryptMessage(key, message):
+    print('decrypting your encrypted message......')
+# The transposition decrypt function will simulate the "columns" and
+# "rows" of the grid that the plaintext is written on by using a list
+# of strings. First, we need to calculate a few values.
+# The number of "columns" in our transposition grid:
+    numOfColumns = math.ceil(len(message) / key)
+# The number of "rows" in our grid will need:
+    numOfRows = key
+# The number of "shaded boxes" in the last "column" of the grid:
+    numOfShadedBoxes = (numOfColumns * numOfRows) - len(message)
+# Each string in plaintext represents a column in the grid.
+    
+    plaintext = [''] * numOfColumns
+
+
+# The col and row variables point to where in the grid the next
+
+# character in the encrypted message will go.
+
+    col = 0
+
+    row = 0
+
+
+    for symbol in message:
+
+        plaintext[col] += symbol
+        col += 1 # point to next column
+
+# If there are no more columns OR we're at a shaded box, go back to
+
+# the first column and the next row.
+        if (col == numOfColumns) or (col == numOfColumns - 1 and row >=numOfRows - numOfShadedBoxes):
+
+            col = 0
+            row += 1
+    print('here is the plaintext sir;')       
+    return ''.join(plaintext)
+ # If transpositionDecrypt.py is run (instead of imported as a module) call
+ # the main() function.
+main()
